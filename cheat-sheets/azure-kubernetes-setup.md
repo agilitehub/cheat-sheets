@@ -117,7 +117,7 @@ name: cluster-admin
 subjects:
 - apiGroup: rbac.authorization.k8s.io
 kind: User
-name: "john@agilite.io"
+name: "joe@acme.com"
 ```
 
 3. Temporarily get credentials as Admin and deploy YAML file:
