@@ -13,28 +13,30 @@
     - [Create Kubernetes Cluster Without AD Enabling AKS](#create-kubernetes-cluster-without-ad-enabling-aks)
     - [Add Credentials to KubeConfig](#add-credentials-to-kubeconfig)
     - [Create Cluster Role Binding and Launch Dashboard](#create-cluster-role-binding-and-launch-dashboard)
-- [Links](#links)
+- [Delete Kubernetes Cluster and All Group Resources](#delete-kubernetes-cluster-and-all-group-resources)
+- [Related Cheatsheets](#related-cheatsheets)
+- [Related Links](#related-links)
 
 ## Configuration Details
 
 The following are config values you will need to use to create the necessary resources
 
 - ***Resource Group Name***: Used to group together resources that make up your Kubernetes implementation
-   - A best practice is to use `camelCase` and prefix the name with `rg` (i.e. rg=Resource Group)
-   - e.g. `rgAcmeDev`
+    - A best practice is to use `camelCase` and prefix the name with `rg` (i.e. rg=Resource Group)
+    - e.g. `rgAcmeDev`
 - ***Location***: The [location](https://azure.microsoft.com/en-us/global-infrastructure/locations/) of the Azure data center that will host your Kubernetes cluster
 - ***Azure Container Registry Name***: This is where container images will be hosted
     - The name must be in `lowercase`
     - A best practice prefix the name with `acr` (i.e. acr=Azure Container Registry)
     - e.g. `acracmedev`
-- ***Azure SKU***: The type of SKU to be used for the Kubernetes service
-    - Basic
-    - Standard
+- ***ACR SKU***: The type of SKU to be used for the Azure Container Registry
+    - Basic (Cost effective)
+    - Standard (Satisfies most production needs)
     - Premium
 - ***Node Count***: A Number value representing the amount of nodes to be created
 - ***Cluster Name***: The name of the Kubernetes cluster you are creating
-   - A best practice is to use `camelCase` and prefix the name with `cluster`
-   - e.g. `clusterAcmeDev`
+    - A best practice is to use `camelCase` and prefix the name with `cluster`
+    - e.g. `clusterAcmeDev`
 
 ## Minimum Requirements
 
@@ -48,7 +50,7 @@ The following are config values you will need to use to create the necessary res
 
 ## Once Off Setups
 
-This section focuses on once-off setups. Please note that some of these are `(Optional)`.
+This section focuses on once-off setups to get the Kubernetes environment up and running
 
 ### Login to Azure
 
@@ -146,7 +148,28 @@ az aks get-credentials --resource-group {resourceGroupName} --name {clusterName}
 az aks browse --resource-group {resourceGroupName} --name {clusterName}
 ```
 
-## Links
+## Delete Kubernetes Cluster and All Group Resources
 
-* [Azure Kubernetes Service](https://docs.microsoft.com/en-us/azure/aks/)
+> ***NB***: Please be careful of this, as this cannot be undone
+
+```bash
+az group delete --name "{resourceGroupName}" --yes --no-wait
+
+az ad sp delete --id $(az aks show -g "{resourceGroupName}" -n "{clusterName}" --query servicePrincipalProfile.clientId -o tsv)
+
+```
+
+On your local environment, remove cluster credentials from Kube Config. The easiest way to remove them is via VS Code's [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools) extension.
+
+## Related Cheatsheets
+* [Create a Static IP Address for Azure Kubernetes Environment](azure-kubernetes-static-ip.md)
+
+## Related Links
+* [Microsoft Azure](https://azure.microsoft.com/en-us)
+* [Kubernetes](https://kubernetes.io)
+* [Azure Kubernetes Service](https://azure.microsoft.com/en-us/services/kubernetes-service)
+* [Azure Kubernetes Service Documentation](https://docs.microsoft.com/en-us/azure/aks)
+* [Azure Container Registry SKUs](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-skus)
+* [Azure Speed](http://www.azurespeed.com)
 * [VS Code](https://code.visualstudio.com)
+* [VS Code Kubernetes Extension](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools)
