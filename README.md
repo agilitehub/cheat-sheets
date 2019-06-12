@@ -5,22 +5,13 @@
 
 ## Table of Contents
 
-- [Cheatsheet Overviews](#cheatsheet-overviews)
-    - [Microsoft Azure Kubernetes Setup](#microsoft-azure-kubernetes-setup)
+- [Cheatsheets](#table-of-contents)
+    - [Microsoft Azure Kubernetes Setup](/cheat-sheets/azure-kubernetes-setup.md)
+    - [Create a Static IP Address for Azure Kubernetes Environment](/cheat-sheets/azure-kubernetes-static-ip.md)
 - [Contributing](#contributing)
 - [Agilit-e Links](#agilit-e-links)
 - [Release History](#release-history)
 - [License](#license)
-
-## Cheatsheet Overviews
-
-This section provides a brief overview for each cheatsheet in this repo.
-
-### Microsoft Azure Kubernetes Setup
-
-Step by step instructions on how to get up and running with Kubernetes on Microsoft Azure Cloud
-
-[Link to cheatsheet](/cheat-sheets/azure-kubernetes-setup.md)
 
 ## Contributing
 
