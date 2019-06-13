@@ -95,8 +95,6 @@ az aks get-credentials --resource-group "{resourceGroupName}" --name "{clusterNa
 
 ### Create Cluster Role Binding and Launch Dashboard
 
-> ***NOTE***: The process below is a bit wonky, but that's because the shorter version sometimes produces weird results. The process below eliminates the weird results.
-
 1. Create cluster role bindings for Kubernetes Dashboard and Default Namespace:
 
 ```bash
