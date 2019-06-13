@@ -62,35 +62,35 @@ This takes you to a browser page to complete the authentication. You can close t
 ### Create Resource Group
 
 ```bash
-az group create --name {resourceGroupName} --location {locationName}
+az group create --name "{resourceGroupName}" --location "{locationName}"
 ```
 
 ### Create Container Registry
 
 ```bash
-az acr create --resource-group {resourceGroupName} --name {acrname} --sku {skuType} --location {locationName}
+az acr create --resource-group "{resourceGroupName}" --name "{acrname}" --sku "{skuType}" --location "{locationName}"
 ```
 
 ### Create Service Principal
 
 ```bash
-az ad sp create-for-rbac --skip-assignment #NB: Take note of App Id and Secret/Password as they get used in the next few commands
+az ad sp create-for-rbac --skip-assignment #NB: Take note of App Id and Password as they get used in the next few commands
 
-ACR_ID=$(az acr show --name {acrname} --resource-group {resourceGroupName} --query "id" --output tsv)
+ACR_ID=$(az acr show --name "{acrname}" --resource-group "{resourceGroupName}" --query "id" --output tsv) #In Powershell, replace ACR_ID with $env:ACR_ID
 
-az role assignment create --assignee {appId} --scope $ACR_ID --role acrpull
+az role assignment create --assignee "{appId}" --scope $ACR_ID --role acrpull #In Powershell, replace $ACR_ID with $env:ACR_ID
 ```
 
 ### Create Kubernetes Cluster Without AD Enabling AKS
 
 ```bash
-az aks create --resource-group {resourceGroupName} --node-count {nodeCount} --name {clusterName} --location {locationName} --service-principal {appId} --client-secret {secretPassword} --generate-ssh-keys
+az aks create --resource-group "{resourceGroupName}" --node-count "{nodeCount}" --name "{clusterName}" --location "{locationName}" --service-principal "{appId}" --client-secret "{password}" --node-vm-size "Standard_DS1_v2" --generate-ssh-keys #Takes about 10 minutes to run
 ```
 
 ### Add Credentials to KubeConfig
 
 ```bash
-az aks get-credentials --resource-group {resourceGroupName} --name {clusterName} --overwrite-existing
+az aks get-credentials --resource-group "{resourceGroupName}" --name "{clusterName}" --overwrite-existing
 ```
 
 ### Create Cluster Role Binding and Launch Dashboard
@@ -105,47 +105,10 @@ kubectl create clusterrolebinding kubernetes-dashboard --clusterrole=cluster-adm
 kubectl create clusterrolebinding default --clusterrole=cluster-admin --serviceaccount=kube-system:default
 ```
 
-2. Create YAML file for Cluster Admins and Azure Account (e.g. `myFile.yaml`):
-
-```yaml
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-name: cluster-admins
-roleRef:
-apiGroup: rbac.authorization.k8s.io
-kind: ClusterRole
-name: cluster-admin
-subjects:
-- apiGroup: rbac.authorization.k8s.io
-kind: User
-name: "joe@acme.com"
-```
-
-3. Temporarily get credentials as Admin and deploy YAML file:
+2. Launch Kubernetes Dashboard
 
 ```bash
-az aks get-credentials --resource-group {resourceGroupName} --name {clusterName} --admin
-
-kubectl apply -f {fileName.yaml} #fileName.yaml refers to the file created in step 2
-```
-
-4. Delete local admin credentials
-
-The credentials are stored in the Kube Config file. The easiest way to remove them is via VS Code's [Kubernetes](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools) extension.
-
-Once installed, open the Kubernetes tab, right-click on the temporary admin cluster created and select `Delete from kubeconfig`.
-
-5. Get credentials again after deleting admin credentials
-
-```bash
-az aks get-credentials --resource-group {resourceGroupName} --name {clusterName}
-```
-
-6. Launch Kubernetes Dashboard
-
-```bash
-az aks browse --resource-group {resourceGroupName} --name {clusterName}
+az aks browse --resource-group "{resourceGroupName}" --name "{clusterName}"
 ```
 
 ## Delete Kubernetes Cluster and All Group Resources
@@ -171,5 +134,6 @@ On your local environment, remove cluster credentials from Kube Config. The easi
 * [Azure Kubernetes Service Documentation](https://docs.microsoft.com/en-us/azure/aks)
 * [Azure Container Registry SKUs](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-skus)
 * [Azure Speed](http://www.azurespeed.com)
+* [Azure Pricing](https://azureprice.net)
 * [VS Code](https://code.visualstudio.com)
 * [VS Code Kubernetes Extension](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools)
