@@ -1,4 +1,4 @@
-![Logo of the project](agilite-logo-full-web.png)
+![Logo of the project](./assets/agilite-logo-full-web.png)
 
 # Cheatsheets
 > An explosion of quick step-by-step instructions, hacks, cheats and guides on all things Cloud, Kubernetes, MERN Stack, Integration and more.
@@ -8,6 +8,7 @@
 - [Cheatsheets](#table-of-contents)
     - [Microsoft Azure Kubernetes Setup](/cheat-sheets/azure-kubernetes-setup.md)
     - [Create a Static IP Address for Azure Kubernetes Environment](/cheat-sheets/azure-kubernetes-static-ip.md)
+    - [Kubernetes (k3s) Setup](/cheat-sheets/kubernetes-k3s-setup.md)
 - [Contributing](#contributing)
 - [Agilit-e Links](#agilit-e-links)
 - [Release History](#release-history)
