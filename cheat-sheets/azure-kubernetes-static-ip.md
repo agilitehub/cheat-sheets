@@ -38,7 +38,7 @@ The following will first retrieve a programmatic version of the Resource Group n
 ```bash
 az aks show --resource-group "{resourceGroupName}" --name "{clusterName}" --query nodeResourceGroup -o tsv # This returns a {programmaticResourceGroupName} that will be used below
 
-az network public-ip create --resource-group "{programmaticResourceGroupName}" --name "{ipName}" --allocation-method static
+az network public-ip create --resource-group "{programmaticResourceGroupName}" --name "{ipName}" --allocation-method "static" --sku "Standard"
 ```
 
 The last command will return the IP address and additional info related to the IP.

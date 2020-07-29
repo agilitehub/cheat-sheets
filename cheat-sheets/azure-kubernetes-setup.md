@@ -84,7 +84,7 @@ az role assignment create --assignee "{appId}" --scope $ACR_ID --role acrpull #I
 ### Create Kubernetes Cluster Without AD Enabling AKS
 
 ```bash
-az aks create --resource-group "{resourceGroupName}" --node-count "{nodeCount}" --name "{clusterName}" --location "{locationName}" --service-principal "{appId}" --client-secret "{password}" --node-vm-size "Standard_DS1_v2" --generate-ssh-keys #Takes about 10 minutes to run
+az aks create --resource-group "{resourceGroupName}" --node-count "{nodeCount}" --name "{clusterName}" --location "{locationName}" --service-principal "{appId}" --client-secret "{password}" --node-vm-size "Standard_DS1_v2" --generate-ssh-keys --enable-addons "monitoring" #Takes about 10 minutes to run
 ```
 
 ### Add Credentials to KubeConfig
